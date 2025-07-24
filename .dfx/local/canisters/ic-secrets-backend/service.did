@@ -1,0 +1,10 @@
+type Secret = 
+ record {
+   encrypted: text;
+   name: text;
+ };
+service : {
+  clearSecrets: () -> (text);
+  getSecrets: () -> (vec Secret);
+  storeSecret: (name: text, encrypted: text) -> (text);
+}
