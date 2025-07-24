@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="🔐 Built for ICP Hackathon">
+  <title>ICP Secrets Vault</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="./reveal.js/dist/theme/black.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">ICP Secrets Vault</h1>
+  <p class="author">🔐 Built for ICP Hackathon</p>
+  <p class="date">July 2025</p>
+</section>
+
+<section id="team-pitch" class="slide level1">
+<h1>👥 Team &amp; Pitch</h1>
+<ul>
+<li>🧠 DevOps frogs, blockchain degenerates</li>
+<li>🛠 Built for ICP Hackathon</li>
+<li>😤 Tired of fake “encryption”</li>
+<li>🔐 Real AES, client-side, on-chain</li>
+</ul>
+</section>
+<section id="the-problem" class="slide level1">
+<h1>😱 The Problem</h1>
+<ul>
+<li>Secrets managers today = centralized honeypots<br />
+</li>
+<li>Many just use <code>btoa()</code> and call it “encryption” 💀<br />
+</li>
+<li>Trusting 3rd parties with your API keys?<br />
+</li>
+<li>Plaintext vaults? Not in this timeline.</li>
+</ul>
+</section>
+<section id="our-solution" class="slide level1">
+<h1>✅ Our Solution</h1>
+<ul>
+<li>🧑‍🚀 Identity-bound ICP Secrets Vault<br />
+</li>
+<li>🔐 AES-256, encrypted client-side<br />
+</li>
+<li>🛡 Zero-knowledge canister<br />
+</li>
+<li>📦 Fully decentralized and paranoid by design</li>
+</ul>
+</section>
+<section id="roadmap" class="slide level1">
+<h1>🗺 Roadmap</h1>
+<ul>
+<li>✅ Hackathon MVP (working!)</li>
+<li>🔄 Shamir Secret Sharing</li>
+<li>🤝 Team Vaults</li>
+<li>🔄 Backup/export</li>
+<li>🎨 Full vaporwave terminal UI</li>
+<li>🕵️ Audit logs &amp; WebAuthn</li>
+</ul>
+</section>
+<section id="features" class="slide level1">
+<h1>🧠 Features</h1>
+<ul>
+<li>🔐 AES-256 encryption (real crypto, no LARP)</li>
+<li>🔑 Principal-based keys</li>
+<li>👀 View secrets (only you)</li>
+<li>🔄 Rage wipe mode</li>
+<li>🛡 Zero-knowledge backend</li>
+<li>💅 TypeScript bindings (auto-generated)</li>
+</ul>
+</section>
+<section id="tldr" class="slide level1">
+<h1>🚀 TL;DR</h1>
+<blockquote>
+<p>This ain’t AWS Secrets Manager.</p>
+</blockquote>
+<ul>
+<li>Encrypted with <strong>your principal ID</strong></li>
+<li>Stored <strong>on-chain</strong> in a <strong>Motoko
+canister</strong></li>
+<li>Only you can decrypt — math over marketing</li>
+</ul>
+</section>
+<section id="local-setup" class="slide level1">
+<h1>🔧 Local Setup</h1>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> src/ic-secrets-frontend <span class="kw">&amp;&amp;</span> <span class="ex">npm</span> install</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">dfx</span> start <span class="at">--background</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">dfx</span> deploy</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span></code></pre></div>
+<p>Visit <code>localhost:5173</code> and vibe 🧘</p>
+</section>
+<section id="api-overview" class="slide level1">
+<h1>🔐 API Overview</h1>
+<pre class="motoko"><code>storeSecret(name, encrypted) // Store encrypted blob
+getSecrets()                // Return all secrets for caller
+clearSecrets()              // Delete all caller secrets</code></pre>
+<p>Everything encrypted in browser using <code>CryptoJS.AES</code>.</p>
+</section>
+<section id="project-structure" class="slide level1">
+<h1>📦 Project Structure</h1>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">secrets/</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> src/ic-secrets-backend/     <span class="co"># 🦀 Motoko canister</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> src/ic-secrets-frontend/    <span class="co"># 🎨 SvelteKit frontend</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> declarations/               <span class="co"># 🤖 TypeScript bindings</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> dfx.json                    <span class="co"># 🔧 Deployment config</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> README.md                   <span class="co"># 🧾 The manifesto</span></span></code></pre></div>
+</section>
+<section id="security-architecture" class="slide level1">
+<h1>🔐 Security Architecture</h1>
+<h3 id="client-side-aes">🛡 Client-Side AES</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> principalId <span class="op">=</span> <span class="cf">await</span> agent<span class="op">.</span><span class="fu">getPrincipal</span>()<span class="op">.</span><span class="fu">toString</span>()<span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> key <span class="op">=</span> CryptoJS<span class="op">.</span><span class="fu">SHA256</span>(principalId)<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> encrypted <span class="op">=</span> CryptoJS<span class="op">.</span><span class="at">AES</span><span class="op">.</span><span class="fu">encrypt</span>(secret<span class="op">,</span> key)<span class="op">;</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<h3 id="zero-knowledge">🧠 Zero-Knowledge</h3>
+<ul>
+<li>✅ Canister sees ciphertext only</li>
+<li>✅ No plaintext ever leaves browser</li>
+<li>✅ Each user’s secrets = isolated</li>
+<li>✅ Principal ID is the key</li>
+</ul>
+<blockquote>
+<p>Not even we can read your secrets.</p>
+</blockquote>
+</section>
+<section id="why-this-matters" class="slide level1">
+<h1>🧮 Why This Matters</h1>
+<ul>
+<li>🔓 No AWS</li>
+<li>🧠 You own your secrets</li>
+<li>⛓ On-chain = immutable</li>
+<li>🕵️ No backdoors</li>
+</ul>
+</section>
+<section id="built-with" class="slide level1">
+<h1>👾 Built With</h1>
+<ul>
+<li>🧬 Motoko – the canister brain</li>
+<li>💻 SvelteKit – slick frontend</li>
+<li>🔐 crypto-js – AES magic</li>
+<li>🔧 DFX – deploy wizardry</li>
+</ul>
+</section>
+<section id="acknowledgements" class="slide level1">
+<h1>🙌 Acknowledgements</h1>
+<blockquote>
+<p>“If AWS is a vault, this is a secret cache buried in the woods and
+only you know the coordinates.”</p>
+</blockquote>
+<p>Thanks to: - 🧠 ICP cycles - 🧙 Motoko wizards - ☕ Caffeine + crypto
+paranoia</p>
+</section>
+<section id="thank-you" class="slide level1">
+<h1>🙏 Thank You</h1>
+<p>Built for the degens.<br />
+Secured by your principal.<br />
+Encrypted like your life depends on it.</p>
+<p>🔥 ICP Hackathon 2025 🔥</p>
+</section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="./reveal.js/plugin/notes/notes.js"></script>
+  <script src="./reveal.js/plugin/search/search.js"></script>
+  <script src="./reveal.js/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
