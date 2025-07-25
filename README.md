@@ -1,4 +1,6 @@
-# 🔐 ICP Secrets Vaul## 🧠 Features
+# 🔐 ICP Secrets Vaul
+
+## 🧠 Features
 
 - 🔐 **Real AES Encryption**: Your secrets are 3. 🚢 **Deploy the backend canister**
 
