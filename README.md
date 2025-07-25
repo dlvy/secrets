@@ -11,54 +11,7 @@
 - 🧹 Reset everything (rage wipe mode)
 - 🧑‍🚀 Identity-bound via ICP principal
 - 🛡️ **Zero-Knowledge**: Canister never sees your plaintext
-- 💅 Retro "vibe code" aesthetic (optional vaporwave upgrade pending...)rets are 3. 🚢 **Deploy the backend canister**
-
-```bash
-dfx deploy ic-secrets-backend
-```
-
-4. 💻 **Run the frontend**
-
-```bash
-cd ## 👾 Built With
-
-- 🧬 [Motoko](https://internetcomputer.org/docs/current/motoko/main/) – for the bulletproof canister
-- 💻 [SvelteKit](https://kit.svelte.dev/) – for the slick frontend  
-- 🔐 [crypto-js](https://github.com/brix/crypto-js) – for real AES encryption (not base64 LARP)
-- 🔧 [DFX](https://internetcomputer.org/docs/current/developer-docs/sdk/dfx/) – for seamless deployment
-- ☕ **Caffeine & Paranoia** – for the proper mindset
-
----
-
-## 🙌 Acknowledgements
-
-Built for crypto devs who actually understand that **"encrypted"** means more than just `btoa()` 💀
-
-Powered by:  
-- ⚡ ICP cycles (the good stuff)
-- 🧠 Motoko canisters (trustless by design)  
-- 🔐 Mathematical certainty (not marketing promises)
-- 💊 Redpilled DevOps energy
-
----
-
-> 🧾 **"If AWS is a bank vault, this is your personal safe deposit box buried in the blockchain, encrypted with keys only you possess."**  
-> 
-> *– Some paranoid anon who's tired of trusting centralized secrets managers*
-
-**Remember**: Not your keys, not your secrets. This time we actually mean it. 🔑✊ontend && npm run start
-```
-
-Then visit [`localhost:3000`](http://localhost:3000) (or whatever port Vite picks) and start storing secrets like a true paranoid crypto dev.
-
-> 💡 **Pro tip**: The frontend automatically generates TypeScript bindings from your Motoko canister. It's like magic, but with more type safety.ent-side with crypto-js (not some weak sauce)
-- 🔑 **Principal-Based Keys**: Your ICP identity = your encryption key (only YOU can decrypt)
-- 🧾 Store encrypted secrets (name + encrypted value) 
-- 🔍 View your secrets (decrypted in real-time, only visible to you, bro)
-- 🧹 Reset everything (rage wipe mode activated)
-- 🧑‍🚀 Identity-bound via ICP principal (zero trust, maximum paranoia)
-- 🛡️ **Zero-Knowledge**: Canister never sees your plaintext (as it should be)
-- 💅 Clean TypeScript interfaces (because we're not animals) 👨‍💻 A decentralized, identity-bound, canister-powered secrets manager with **REAL AES ENCRYPTION** for the brave new world of Web3 infrastructure devs on the Internet Computer.
+- 💅 Retro "vibe code" aesthetic (optional vaporwave upgrade pending...)
 
 ---
 
@@ -205,8 +158,6 @@ const encrypted = CryptoJS.AES.encrypt(yourSecret, encryptionKey);
 - Your principal ID = your encryption key = your responsibility 
 
 > **tl;dr**: Even if the NSA seizes our canister, your secrets are still encrypted with YOUR key 🕵️‍♂️
-
----
 
 ---
 
