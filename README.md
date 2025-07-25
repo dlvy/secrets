@@ -1,4 +1,4 @@
-# 🔐 ICP Secrets Vaul
+# 🔐 ICP Secrets Vault
 
 ## 🧠 Features
 
