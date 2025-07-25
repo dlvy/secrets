@@ -1,4 +1,5 @@
 import { createActor, canisterId } from 'declarations/ic-secrets-backend';
+import { getAuthenticatedActor } from './auth';
 import { building } from '$app/environment';
 
 function dummyActor() {
@@ -7,6 +8,9 @@ function dummyActor() {
 
 const buildingOrTesting = building || process.env.NODE_ENV === "test";
 
-export const backend = buildingOrTesting
-    ? dummyActor()
-    : createActor(canisterId);
+export const getBackend = async () => {
+    if (buildingOrTesting) {
+        return dummyActor();
+    }
+    return await getAuthenticatedActor(createActor, canisterId);
+};

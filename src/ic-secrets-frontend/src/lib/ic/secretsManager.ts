@@ -1,23 +1,36 @@
 import { Actor, HttpAgent } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
-import { idlFactory as secrets_idl, canisterId as secrets_id } from '../../../../declarations/ic-secrets-backend';
+import { idlFactory as secrets_idl, canisterId as secrets_id } from '../../../../declarations/ic-secrets-backend/index.js';
 import type { Secret, SharedSecret, _SERVICE } from '../../../../declarations/ic-secrets-backend/ic-secrets-backend.did';
 import CryptoJS from 'crypto-js';
+import { getAuthenticatedActor, initAuth } from '../auth';
 
 export async function createActor(): Promise<_SERVICE> {
-  const agent = new HttpAgent();
-  if (import.meta.env.DEV) await agent.fetchRootKey();
-  return Actor.createActor(secrets_idl, {
-    agent,
-    canisterId: secrets_id,
-  }) as _SERVICE;
+  return getAuthenticatedActor(
+    (canisterId: string, options: any) => Actor.createActor(secrets_idl, {
+      canisterId,
+      ...options,
+    }),
+    secrets_id
+  ) as Promise<_SERVICE>;
 }
 
 // Get the principal ID for encryption key derivation
 export async function getPrincipalId(): Promise<string> {
-  const agent = new HttpAgent();
-  if (import.meta.env.DEV) await agent.fetchRootKey();
-  const principal = await agent.getPrincipal();
+  const authClient = await initAuth();
+  
+  if (!(await authClient.isAuthenticated())) {
+    throw new Error('Cannot store secrets with anonymous principal. Please authenticate first.');
+  }
+  
+  const identity = authClient.getIdentity();
+  const principal = identity.getPrincipal();
+  
+  // Check if we have an anonymous principal (which would indicate no authentication)
+  if (principal.isAnonymous()) {
+    throw new Error('Cannot store secrets with anonymous principal. Please authenticate first.');
+  }
+  
   return principal.toString();
 }
 
