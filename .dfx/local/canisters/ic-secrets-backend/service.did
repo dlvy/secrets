@@ -1,3 +1,10 @@
+type SharedSecret = 
+ record {
+   encrypted: text;
+   name: text;
+   sharedBy: principal;
+   sharedWith: principal;
+ };
 type Secret = 
  record {
    encrypted: text;
@@ -5,6 +12,10 @@ type Secret =
  };
 service : {
   clearSecrets: () -> (text);
+  clearSharedSecrets: () -> (text);
   getSecrets: () -> (vec Secret);
+  getSharedSecrets: () -> (vec SharedSecret);
+  shareSecret: (name: text, encryptedForRecipient: text, recipientPrincipal:
+   principal) -> (text);
   storeSecret: (name: text, encrypted: text) -> (text);
 }

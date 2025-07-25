@@ -1,4 +1,66 @@
-# 🔐 ICP Secrets Vault
+# 🔐 ICP Secrets Vaul
+
+## 🧠 Features
+
+- 🔐 **Real AES Encryption**: Your secrets are encrypted client-side with crypto-js
+- 🔑 **Principal-Based Keys**: Your ICP identity = your encryption key (only YOU can decrypt)
+- 🧾 Store encrypted secrets (label + value)
+- 🔍 View your secrets (only you can see them, bro)
+- 🤝 **Share Secrets**: Securely share encrypted secrets with other ICP principals
+- 📥 **Receive Shared Secrets**: View secrets that others have shared with you
+- 🧹 Reset everything (rage wipe mode)
+- 🧑‍🚀 Identity-bound via ICP principal
+- 🛡️ **Zero-Knowledge**: Canister never sees your plaintext
+- 💅 Retro "vibe code" aesthetic (optional vaporwave upgrade pending...)rets are 3. 🚢 **Deploy the backend canister**
+
+```bash
+dfx deploy ic-secrets-backend
+```
+
+4. 💻 **Run the frontend**
+
+```bash
+cd ## 👾 Built With
+
+- 🧬 [Motoko](https://internetcomputer.org/docs/current/motoko/main/) – for the bulletproof canister
+- 💻 [SvelteKit](https://kit.svelte.dev/) – for the slick frontend  
+- 🔐 [crypto-js](https://github.com/brix/crypto-js) – for real AES encryption (not base64 LARP)
+- 🔧 [DFX](https://internetcomputer.org/docs/current/developer-docs/sdk/dfx/) – for seamless deployment
+- ☕ **Caffeine & Paranoia** – for the proper mindset
+
+---
+
+## 🙌 Acknowledgements
+
+Built for crypto devs who actually understand that **"encrypted"** means more than just `btoa()` 💀
+
+Powered by:  
+- ⚡ ICP cycles (the good stuff)
+- 🧠 Motoko canisters (trustless by design)  
+- 🔐 Mathematical certainty (not marketing promises)
+- 💊 Redpilled DevOps energy
+
+---
+
+> 🧾 **"If AWS is a bank vault, this is your personal safe deposit box buried in the blockchain, encrypted with keys only you possess."**  
+> 
+> *– Some paranoid anon who's tired of trusting centralized secrets managers*
+
+**Remember**: Not your keys, not your secrets. This time we actually mean it. 🔑✊ontend && npm run start
+```
+
+Then visit [`localhost:3000`](http://localhost:3000) (or whatever port Vite picks) and start storing secrets like a true paranoid crypto dev.
+
+> 💡 **Pro tip**: The frontend automatically generates TypeScript bindings from your Motoko canister. It's like magic, but with more type safety.ent-side with crypto-js (not some weak sauce)
+- 🔑 **Principal-Based Keys**: Your ICP identity = your encryption key (only YOU can decrypt)
+- 🧾 Store encrypted secrets (name + encrypted value) 
+- 🔍 View your secrets (decrypted in real-time, only visible to you, bro)
+- 🧹 Reset everything (rage wipe mode activated)
+- 🧑‍🚀 Identity-bound via ICP principal (zero trust, maximum paranoia)
+- 🛡️ **Zero-Knowledge**: Canister never sees your plaintext (as it should be)
+- 💅 Clean TypeScript interfaces (because we're not animals) 👨‍💻 A decentralized, identity-bound, canister-powered secrets manager with **REAL AES ENCRYPTION** for the brave new world of Web3 infrastructure devs on the Internet Computer.
+
+---
 
 ## 🚀 TL;DR
 
@@ -96,14 +158,23 @@ Then visit [`localhost:5173`](http://localhost:5173) and start vibin’ with you
 // getSecrets() → [Secret]
 // Returns all encrypted secrets for caller (decrypt client-side)
 
+// shareSecret(name: Text, encryptedForRecipient: Text, recipientPrincipal: Principal) → Text
+// Shares an encrypted secret with another principal
+
+// getSharedSecrets() → [SharedSecret]
+// Returns all secrets shared with the caller (decrypt client-side)
+
 // clearSecrets() → Text
 // Deletes all secrets for caller (nuclear option activated)
+
+// clearSharedSecrets() → Text
+// Deletes all shared secrets for caller
 ```
 
 **Important**: The canister only stores encrypted blobs. All encryption/decryption happens in your browser using your principal ID as the key derivation source.
 
 Secrets are stored per `Principal`, so nobody can see yours. Not even us. **Especially** not us.  
-Trust the math, bro �✨
+Trust the math, bro ✨
 
 ---
 
@@ -148,6 +219,13 @@ const encrypted = CryptoJS.AES.encrypt(yourSecret, encryptionKey);
 4. **📥 Retrieval** → Encrypted data comes back, gets decrypted in your browser
 5. **✨ Magic** → Only you see the plaintext, canister sees gibberish
 
+### 🤝 **The Secret Sharing Flow**
+1. **🎯 Select recipient** → Enter their ICP principal ID
+2. **🔐 Encrypt for them** → Secret gets encrypted using THEIR principal ID (not yours)
+3. **📤 Share encrypted blob** → Only the recipient can decrypt it
+4. **📱 They receive** → Shared secret appears in their "Shared with you" section
+5. **🔓 They decrypt** → Only their browser can decrypt it using their principal
+
 ### 🔑 **Principal-Based Encryption Explained**
 ```
 Your ICP Principal: bkyz2-fmaaa-aaaaa-qaaaq-cai
@@ -158,11 +236,25 @@ Your Secret: "my-super-secret-api-key"
 Encrypted Blob: "U2FsdGVkX1+vupppZksvRf5pq5g5XjFRIipRkwB0K1Y="
 ```
 
+### 🔀 **Secret Sharing Cryptography**
+```
+Your Secret: "shared-api-key"
+Recipient Principal: xyz7-fmaaa-aaaaa-qaaaq-cai
+         ↓ SHA256 Hash (recipient's principal)
+Recipient's Key: x9y8z7w6v5u4...
+         ↓ AES Encrypt (with THEIR key)
+Shared Encrypted Blob: "U2FsdGVkX1+abc123def456..."
+         ↓ Stored on-chain
+Only the recipient can decrypt this blob!
+```
+
 ### 🧮 **Why This Matters**
 - **Decentralized**: No AWS, no Google, no "trust us bro" companies
 - **Self-Sovereign**: You control the keys, you control the data
 - **Immutable**: Stored on ICP blockchain, can't be "accidentally" deleted
 - **Private**: Even we can't see your secrets (and we built the thing)
+- **Secure Sharing**: Share secrets with specific people without exposing them to anyone else
+- **Zero Trust**: Each secret is encrypted with the recipient's unique key
 
 ---
 
@@ -170,7 +262,8 @@ Encrypted Blob: "U2FsdGVkX1+vupppZksvRf5pq5g5XjFRIipRkwB0K1Y="
 
 - 🎯 **Shamir Secret Sharing**: Split secrets across multiple principals
 - 📦 **Secret NFTs**: Bundle secrets as tradeable assets (because why not?)
-- 🤝 **Team Vaults**: Share encrypted secrets with your dev team
+- 👥 **Group Sharing**: Share with multiple principals at once
+- 🕐 **Expiring Shares**: Set time limits on shared secrets
 - 🎨 **Full vaporwave UI**: Terminal mode with ASCII art
 - 🔄 **Backup/Export**: Download encrypted vault for cold storage
 - 🕵️ **Audit Logs**: See when/where your secrets were accessed

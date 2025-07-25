@@ -1,6 +1,7 @@
 import { Actor, HttpAgent } from '@dfinity/agent';
+import { Principal } from '@dfinity/principal';
 import { idlFactory as secrets_idl, canisterId as secrets_id } from '../../../../declarations/ic-secrets-backend';
-import type { Secret, _SERVICE } from '../../../../declarations/ic-secrets-backend/ic-secrets-backend.did';
+import type { Secret, SharedSecret, _SERVICE } from '../../../../declarations/ic-secrets-backend/ic-secrets-backend.did';
 import CryptoJS from 'crypto-js';
 
 export async function createActor(): Promise<_SERVICE> {
@@ -91,4 +92,60 @@ export async function getDecryptedSecrets(): Promise<Array<{name: string, decryp
   );
   
   return decryptedSecrets;
+}
+
+// Encrypt data for a specific principal (for sharing)
+export async function encryptDataForPrincipal(data: string, recipientPrincipalId: string): Promise<string> {
+  try {
+    const key = CryptoJS.SHA256(recipientPrincipalId).toString();
+    const encrypted = CryptoJS.AES.encrypt(data, key).toString();
+    return encrypted;
+  } catch (error) {
+    console.error('Encryption for recipient failed:', error);
+    throw new Error('Failed to encrypt data for recipient');
+  }
+}
+
+// Share a secret with another principal
+export async function shareSecretWithPrincipal(secretName: string, plainTextValue: string, recipientPrincipalId: string): Promise<string> {
+  const actor = await createActor();
+  const encryptedForRecipient = await encryptDataForPrincipal(plainTextValue, recipientPrincipalId);
+  const recipientPrincipal = Principal.fromText(recipientPrincipalId);
+  return await actor.shareSecret(secretName, encryptedForRecipient, recipientPrincipal);
+}
+
+// Get shared secrets and decrypt them client-side
+export async function getDecryptedSharedSecrets(): Promise<Array<{name: string, decrypted: string, encrypted: string, sharedBy: string}>> {
+  const actor = await createActor();
+  const sharedSecrets = await actor.getSharedSecrets();
+  
+  const decryptedSharedSecrets = await Promise.all(
+    sharedSecrets.map(async (secret: SharedSecret) => {
+      try {
+        const decrypted = await decryptData(secret.encrypted);
+        return {
+          name: secret.name,
+          decrypted: decrypted,
+          encrypted: secret.encrypted,
+          sharedBy: secret.sharedBy.toString()
+        };
+      } catch (error) {
+        console.error(`Failed to decrypt shared secret "${secret.name}":`, error);
+        return {
+          name: secret.name,
+          decrypted: '[Decryption Failed]',
+          encrypted: secret.encrypted,
+          sharedBy: secret.sharedBy.toString()
+        };
+      }
+    })
+  );
+  
+  return decryptedSharedSecrets;
+}
+
+// Clear shared secrets
+export async function clearSharedSecrets(): Promise<string> {
+  const actor = await createActor();
+  return await actor.clearSharedSecrets();
 }
